@@ -1,0 +1,30 @@
+.panel {
+  font-family: "Roboto", sans-serif;
+  background: rgba(21, 21, 21, 0.8);
+  height: 100%;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-size: 3rem;
+  max-height: 100%;
+  overflow: scroll;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+.name {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.voteContainer {
+  position: relative;
+}
+
+.votes {
+  position: absolute;
+  right: 0;
+}

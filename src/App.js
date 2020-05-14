@@ -1,7 +1,8 @@
 // @ts-nocheck
 // @ts-ignore
 import React from "react";
-import "./App.css";
+import Panel from "./Panel";
+import { hot } from "react-hot-loader/root";
 
 const options = {
   ANGULAR: {
@@ -37,7 +38,7 @@ function App() {
     connection.onmessage = (event) => {
       const message = JSON.parse(event.data);
       if (message.command === "!TEST") {
-        console.log(message);
+        console.log(`TestMessage: ${message}`);
       }
       if (message.command === "!VOTE") {
         if (options[message.message]) {
@@ -56,20 +57,7 @@ function App() {
 
     return () => {};
   }, []);
-  return (
-    <div className="App">
-      <code>
-        {Object.values(votes).map((vote) => {
-          console.log(vote);
-          return (
-            <pre key={vote.name}>
-              {vote.name} - {vote.votes}
-            </pre>
-          );
-        })}
-      </code>
-    </div>
-  );
+  return <Panel votes={votes} />;
 }
 
-export default App;
+export default hot(App);
