@@ -27,35 +27,37 @@ const options = {
   },
 };
 
-const SOCKET_URL = "ws://localhost:4001";
+// const SOCKET_URL = "ws://deno-noders-live.herokuapp.com";
+const SOCKET_URL = "ws://localhost:4000/ws";
+
 function App() {
   const [, setConnection] = React.useState(null);
   const [votes, setVotes] = React.useState(options);
-  const [hi, setHi] = React.useState("");
   React.useEffect(() => {
     const connection = new WebSocket(SOCKET_URL);
     setConnection(connection);
     connection.onmessage = (event) => {
       const message = JSON.parse(event.data);
+      console.log({ message });
       if (message.command === "!TEST") {
         console.log(`TestMessage: ${message}`);
       }
       if (message.command === "!VOTE") {
-        if (options[message.message]) {
+        const { voteKey, voteValue } = message.message;
+        if (options[voteKey]) {
           setVotes((votes) => {
+            console.log(votes);
             return {
               ...votes,
-              [message.message]: {
-                ...votes[message.message],
-                votes: votes[message.message].votes + 1,
+              [voteKey]: {
+                ...votes[voteKey],
+                votes: voteValue,
               },
             };
           });
         }
       }
     };
-
-    return () => {};
   }, []);
   return <Panel votes={votes} />;
 }
